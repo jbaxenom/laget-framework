@@ -1,18 +1,36 @@
-# L.A.G.E.T Framework - Layered API and GUI End-to-end Testing Framework
+# L.A.G.E.T (Layered API and GUI End-to-end Testing) Framework
 
-The concept of a team is crucial for Agile Testing but it is often forgotten by testers when creating test frameworks, 
-which most of the time do not provide any way for non-technical team members to create test cases. The LAGET Framework 
-(laget means "team" in Swedish) aims to solve this by providing an adaptive approach for creating GUI tests for Desktop 
-Web, Mobile Web and Mobile apps, as well as API tests for RESTfull webservices. 
+The "team approach" is one of the pillars of Agile Development, but us testers often do not take it into account when 
+creating test frameworks (as I have discussed in some blog posts [here] (https://www.linkedin.com/pulse/what-test-automation-framework-should-building-chema-del-barco) 
+and [there] (https://www.linkedin.com/pulse/writing-test-framework-help-team-build-quality-chema-del-barco). For 
+instance, most test frameworks are aimed to be used only by testers and thus do not provide an easy way for non-technical 
+team members to create test cases, which means they'll have a hard time being able to help. 
 
-LAGET works by providing different abstraction layers that adapt to the different technical skillsets that agile team 
-members have, taking special attention at non-technical users. uses Meza's (meza.hu) AAO Framework to work in different 
-abstraction layers that adapt to different technical skills: Behavior, Domain and Interactions.
+The LAGET Framework aims to solve this by providing an adaptive approach for creating test cases, using different 
+abstraction layers that adapt to the different technical skillsets that agile team members have and taking special 
+consideration towards non-technical users. It is important to understand that LAGET is not a test library but a 
+compendium of core settings, methodologies, best practices and tools that will make a great start point to create GUI 
+tests for Desktop Web, Mobile Web and Mobile apps as well as API tests for RESTfull webservices.
+
+LAGET defines 3 different but complementary layers: "Behavior", "Domain" and "Interactions", which are explained below. 
+With the goal of maximizing the usefulness of the framework and thus removing unnecessary overhead for more technical 
+testers, LAGET is offered in 2 flavours: LAGET-DD and LAGET-LITE. LAGET-DD (Domain-Driven), which is my recommended 
+option, is prepared to use all the layers combined, whilst LAGET-LITE removes the Domain Layer to go "straight to the 
+point" and combine Cucumber and Selenium and/or REST calls.  
+
+Thanks to this adaptative approach, LAGET has successfully been used to teach non-technical testers how to use Cucumber,
+Selenium, Appium, Cloud Testing, Continuous Integration and several other tools and methodologies related to Agile
+Testing. 
+
+So as good Agile testers we are, give it a try, see if you like it, ask questions and feel free to experiment, change and
+improve it!
+
+# LAGET Layers Explained
 
 ## Behavior Layer (Cucumber)
 
 Behavior-Driven Development aims to provide a common language to represent business features through different scenarios
-that contain several steps. Scenarios implement user stories from their perspective, which is at the same time the 
+that contain several steps. Scenarios implement user stories from their own perspective, which is at the same time the 
 functional acceptance criteria for that application. [Cucumber](https://cucumber.io/) is an implementation of BDD that 
 uses [gherkin notation](https://github.com/cucumber/cucumber/wiki/Gherkin) (Given, When, Then, And) as the common 
 language framework.
@@ -28,21 +46,22 @@ becomes
 Which provides a simple way to script the tests to make them more dynamic, as steps are reusable between different
 scenarios and even feature files.
 
-## Domain Layer (Meza's AAO - Actors, Actions, Outcomes)
+## Domain Layer
 
-Tests always follow the same pattern:
+Tests ALWAYS follow the same pattern. If you think about it, we always do the same:
  
-    Someone does something
+    We have a System Under Test in a particular state
+    Someone does something on that SUT
     We compare the result with the expectation
 
-LAGET implements this idea by using the [AAO](https://github.com/meza/AAO) library to encapsulating REST calls, web page
-and mobile interactions into action objects which are executed by actor objects that pre-define whatever data the user 
-would need to interact with the app(s). This allows for Framework users with little technical experience can create 
-tests easily, as they can just use whatever actions are available for the actors that are implemented.
+LAGET implements this idea by adapting Meza's brilliant [AAO](https://github.com/meza/AAO) library to encapsulating REST 
+calls, web page and mobile interactions into action objects which are executed by actor objects that pre-define whatever 
+data the user would need to interact with the app(s). This allows for Framework users with little technical experience 
+to create tests easily, as they can just use whatever actions are available for the actors that are implemented.
 
 ### AAO + Cucumber
 
-AAO combines perfectly with Cucumber to provide a systematic, trivial approach tom implement steps: 
+AAO combines perfectly with Cucumber to provide a systematic, trivial approach to implement test steps: 
 
  - In the `Given` steps we use test data to define the `Actor`
  - During the `When` steps, the `Actor` performs a set of `Actions`
@@ -64,6 +83,8 @@ and REST-full webservices, and it makes your work a lot easier by:
 - Implementing seamless setup of different test environments for both web and integration tests. The framework will point 
   to the right environment URL's just by setting them in the environment.properties file
 - Providing the most common Page Object helpers for both WebDriver and Appium (through Abstract pages)
+- Providing out-of-the-box solution to run parallel tests and aggregate the reports into one nice-looking HTML
+- Providing some nice test data tools, specially for writing and reading REST payloads
  
 ### Selenium WebDriver 
 
@@ -72,13 +93,17 @@ to define typical elements and interactions in any website: WebElement, Wait, Fi
 Selenium can run concurrently and remote through Selenium Grid, it is constantly improved and has a very active 
 community.
 
+LAGET provides abstract structures that contain the most common helpers you always have to implement from scratch when
+using Selenium. It also provides examples in how to apply best practices. 
+
 ### Appium
 
-Makes the interface with Android and IOS native, hybrid or web apps completely transparent by using their own 
-AndroidDriver and IOSDriver implementations
-As it is based in WebDriver it can be seamlessly integrated in web GUI frameworks
-Has libraries in Java, JavaScript (Node.js), PHP, Python, Ruby, Clojure... 
-LAGET provides special Actors and Actions to work with it
+Appium makes interactions with Android and IOS native, hybrid or web apps completely transparent by using their own 
+AndroidDriver and IOSDriver implementations. As it is based in WebDriver it can be seamlessly integrated in web GUI 
+frameworks. 
+
+LAGET provides dedicated Actors and Actions ready to interact with mobile devices, which adds a further abstraction 
+level to make it even easier. 
 
 ### Page Objects
 
@@ -96,7 +121,8 @@ Some other good properties of Page Object pattern are:
 
 ### API Layer (REST tools)
 
-TBD
+Explanation coming soon!
+
 
 # Package Structure
 The structure of the framework is the following:
@@ -175,7 +201,7 @@ only if `GRID=SAUCE`).
 
 Here's a short explanation of what these variables do:
 
-### ENVIRONMENT
+## ENVIRONMENT
 
 Sets the test environment where the tests will run. The endpoints need to be set in `environment.properties`. Options:
 
@@ -186,7 +212,7 @@ Sets the test environment where the tests will run. The endpoints need to be set
     TESTDRIVE       # Testdrives are usually production test environments
     PRODUCTION      # The live environment
 
-### GRID
+## GRID
 
 Selenium GRID allows concurrent, cross-browser testing by creating a farm of cloud clients where to run tests. Options 
 supported:
@@ -202,7 +228,7 @@ Example:
     GRID=NO_GRID mvn clean test
     GRID=http://www.mycloudgrid.com:4444/wd/hub mvn clean test
     
-### BROWSER
+## BROWSER
 
 The browser where the test will be run. List of browsers supported:
 
@@ -216,7 +242,7 @@ The browser where the test will be run. List of browsers supported:
 
 There are 3 ways of running tests: using `ant`, using `maven` or using your preferred programming IDE.
 
-## Running Tests with Ant
+# Running Tests with Ant
 
 The `ant` build contains a predefined parallel cross-browser test run meant to be run in the SAUCE grid environment only. 
 It is configured by the `build.xml` file in the root folder. You can set a couple of parameters for the run: ENVIRONMENT 
@@ -229,7 +255,7 @@ located in `LAGET/reports` and the time and date with format "MM.dd_HH.mm.ss". J
 `cucumber/feature-overview.html` to get a complete and beautiful status of your tests. 
 
 
-## Running Tests with Maven
+# Running Tests with Maven
 
 This is the default way of running tests. The standard phases of the maven project will run all the test suites, which 
 is often not very convenient, but luckily the cucumber test runner provides some options to select the suite to run or 
@@ -254,7 +280,7 @@ in your local Firefox and pointing to the "test" environment.
 If you want to know more about how to run maven you can check [their website](https://maven.apache.org/run-maven/index.html). Options for the cucumber
 command line can be found [here](https://cucumber.io/docs/reference/jvm) or by running `mvn clean install -Dcucumber.options="--help"`.
 
-## Running Tests in your IDE
+# Running Tests in your IDE
 
 Most of the more common IDE's have a cucumber plugin that can be use to run tests in the same way you run normal JUnit 
 tests. IntelliJ for instance allows running tests by:
