@@ -1,0 +1,125 @@
+<project name="LAGET" default="reports" basedir=".">
+    <description>LAGET Parallel Test Runner for SAUCE LABS Selenium Grid</description>
+
+    <property environment="env"/>
+    <property name="env.GRID" value="SAUCE"/> <!-- DO NOT CHANGE -->
+    <property name="env.ENVIRONMENT" value="INTEGRATION"/>
+    <property name="env.SUITE" value="pure_webdriver"/>
+
+    <tstamp>
+        <format property="TIMESTAMP" pattern="MM.dd_HH.mm.ss" locale="en,UK"/>
+    </tstamp>
+
+    <!-- Clean the maven files from previous build -->
+    <target name="clean" description="Clean previous target files">
+        <exec executable="mvn">
+            <arg value="clean"/>
+        </exec>
+    </target>
+
+    <target name="compile" depends="clean" description="Compiles the code once only">
+        <exec executable="mvn">
+            <arg value="compile"/>
+            <arg value="test-compile"/>
+        </exec>
+    </target>
+
+    <!-- Run all tests tagged as SUITE (env. variable) in a combination of OSX, Windows and Linux OS' and Firefox, Chrome and IE browsers-->
+    <target name="all-browsers" depends="compile" description="Runs SUITE in all browsers">
+
+        <property name="reports.dir" value="${basedir}/reports"/>
+        <property name="output.dir" value="${reports.dir}/${TIMESTAMP}"/>
+        <property name="cucumber.dir" value="${output.dir}/cucumber"/>
+
+        <!-- create directories for reporting -->
+        <mkdir dir="${reports.dir}"/>
+        <mkdir dir="${output.dir}"/>
+        <mkdir dir="${cucumber.dir}"/>
+
+        <parallel threadCount="8" timeout="600000">
+            <sequential>
+                <exec executable="mvn">
+                    <env key="GRID" value="${env.GRID}"/>
+                    <env key="ENVIRONMENT" value="${env.ENVIRONMENT}"/>
+                    <env key="BROWSER" value="FIREFOX"/>
+                    <env key="OS" value="OSX 10.10"/>
+                    <arg line="surefire:test -Dcucumber.options=&quot;--plugin json:${cucumber.dir}/osx-firefox.json --tags @${env.SUITE}&quot;"/>
+                </exec>
+            </sequential>
+            <sequential>
+                <exec executable="mvn">
+                    <env key="GRID" value="${env.GRID}"/>
+                    <env key="ENVIRONMENT" value="${env.ENVIRONMENT}"/>
+                    <env key="BROWSER" value="CHROME"/>
+                    <env key="OS" value="OSX 10.10"/>
+                    <arg line="surefire:test -Dcucumber.options=&quot;--plugin json:${cucumber.dir}/osx-chrome.json --tags @${env.SUITE}&quot;"/>
+                </exec>
+            </sequential>
+            <sequential>
+                <exec executable="mvn">
+                    <env key="GRID" value="${env.GRID}"/>
+                    <env key="ENVIRONMENT" value="${env.ENVIRONMENT}"/>
+                    <env key="BROWSER" value="FIREFOX"/>
+                    <env key="OS" value="Linux"/>
+                    <arg line="surefire:test -Dcucumber.options=&quot;--plugin json:${cucumber.dir}/linux-firefox.json --tags @${env.SUITE}&quot;"/>
+                </exec>
+            </sequential>
+            <sequential>
+                <exec executable="mvn">
+                    <env key="GRID" value="${env.GRID}"/>
+                    <env key="ENVIRONMENT" value="${env.ENVIRONMENT}"/>
+                    <env key="BROWSER" value="CHROME"/>
+                    <env key="OS" value="Linux"/>
+                    <arg line="surefire:test -Dcucumber.options=&quot;--plugin json:${cucumber.dir}/linux-chrome.json --tags @${env.SUITE}&quot;"/>
+                </exec>
+            </sequential>
+            <sequential>
+                <exec executable="mvn">
+                    <env key="GRID" value="${env.GRID}"/>
+                    <env key="ENVIRONMENT" value="${env.ENVIRONMENT}"/>
+                    <env key="BROWSER" value="FIREFOX"/>
+                    <env key="OS" value="Windows 8.1"/>
+                    <arg line="surefire:test -Dcucumber.options=&quot;--plugin json:${cucumber.dir}/windows81-firefox.json --tags @${env.SUITE}&quot;"/>
+                </exec>
+            </sequential>
+            <sequential>
+                <exec executable="mvn">
+                    <env key="GRID" value="${env.GRID}"/>
+                    <env key="ENVIRONMENT" value="${env.ENVIRONMENT}"/>
+                    <env key="BROWSER" value="CHROME"/>
+                    <env key="OS" value="Windows 8.1"/>
+                    <arg line="surefire:test -Dcucumber.options=&quot;--plugin json:${cucumber.dir}/windows81-chrome.json --tags @${env.SUITE}&quot;"/>
+                </exec>
+            </sequential>
+            <sequential>
+                <exec executable="mvn">
+                    <env key="GRID" value="${env.GRID}"/>
+                    <env key="ENVIRONMENT" value="${env.ENVIRONMENT}"/>
+                    <env key="BROWSER" value="IE"/>
+                    <env key="VERSION" value="11"/>
+                    <env key="OS" value="Windows 8.1"/>
+                    <arg line="surefire:test -Dcucumber.options=&quot;--plugin json:${cucumber.dir}/windows81-ie11.json --tags @${env.SUITE}&quot;"/>
+                </exec>
+            </sequential>
+            <sequential>
+                <exec executable="mvn">
+                    <env key="GRID" value="${env.GRID}"/>
+                    <env key="ENVIRONMENT" value="${env.ENVIRONMENT}"/>
+                    <env key="BROWSER" value="IE"/>
+                    <env key="VERSION" value="11"/>
+                    <env key="OS" value="Windows 7"/>
+                    <arg line="surefire:test -Dcucumber.options=&quot;--plugin json:${cucumber.dir}/windows7-ie11.json --tags @${env.SUITE}&quot;"/>
+                </exec>
+            </sequential>
+        </parallel>
+    </target>
+
+    <!-- Aggregate all reports into one nice HTML -->
+    <target name="reports" depends="all-browsers">
+        <exec executable="mvn">
+            <env key="TIMESTAMP" value="${TIMESTAMP}"/>
+            <env key="ENVIRONMENT" value="${env.ENVIRONMENT}"/>
+            <arg value="exec:java"/>
+        </exec>
+    </target>
+</project>
