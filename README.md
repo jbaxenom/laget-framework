@@ -14,9 +14,10 @@ tests for Desktop Web, Mobile Web and Mobile apps as well as API tests for RESTf
 
 LAGET defines 3 different but complementary layers: "Behavior", "Domain" and "Interactions", which are explained below. 
 With the goal of maximizing the usefulness of the framework and thus removing unnecessary overhead for more technical 
-testers, LAGET is offered in 2 flavours: LAGET-DD and LAGET-LITE. LAGET-DD (Domain-Driven), which is my recommended 
-option, is prepared to use all the layers combined, whilst LAGET-LITE removes the Domain Layer to go "straight to the 
-point" and combine Cucumber and Selenium and/or REST calls.  
+testers, LAGET will be offered in 2 flavours: LAGET-DD (or simply LAGET) and LAGET-LITE. LAGET-DD (Domain-Driven), which 
+is my recommended option, is prepared to use all the layers combined, whilst LAGET-LITE removes the Domain Layer to go 
+"straight to the point" and combine Cucumber and Selenium and/or REST calls. This repository contains LAGET-DD. 
+LAGET-LITE will be added soon as a separated repository. 
 
 Thanks to this adaptative approach, LAGET has successfully been used to teach non-technical testers how to use Cucumber,
 Selenium, Appium, Cloud Testing, Continuous Integration and several other tools and methodologies related to Agile
@@ -208,7 +209,6 @@ Sets the test environment where the tests will run. The endpoints need to be set
     DEV             # Local dev environment
     INTEGRATION     # Environment used for verifying the integration of different components of the system
     STAGING         # The Staging environment, normally used for regression tests
-    PERFTEST        # The Performance Test environment, usually very similar to the live system (sometimes Staging itself)
     TESTDRIVE       # Testdrives are usually production test environments
     PRODUCTION      # The live environment
 
@@ -218,8 +218,9 @@ Selenium GRID allows concurrent, cross-browser testing by creating a farm of clo
 supported:
 
     NO_GRID (or empty) # Runs the test in your local WebDriver browser instead of Selenium Grid (default value)
-    LOCAL              # Use the default "http://localhost:4444/wd/hub" local Grid (which needs to be previously 
+    LOCAL_GRID         # Use the default "http://localhost:4444/wd/hub" local Grid (which needs to be previously 
                        # started in your local machine)
+    LOCAL_APPIUM       # Uses the default Appium local server at "http://localhost:4273/wd/hub"
     SAUCE              # Use the SAUCE LABS cloud (with the settings in `environment.properties`)
     <URL>              # Point to a remote Selenium Grid HUB hosted in that URL
 
