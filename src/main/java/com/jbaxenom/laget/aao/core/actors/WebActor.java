@@ -18,7 +18,7 @@ import java.util.Date;
 /**
  * Created by jbaxenom on 2014-08-19.
  */
-public class WebActor extends Actor {
+public abstract class WebActor extends Actor {
 
     private final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 

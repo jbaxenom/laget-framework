@@ -1,6 +1,5 @@
 package com.jbaxenom.laget.aao.core.actors;
 
-import com.jbaxenom.laget.aao.core.actions.MobileAction;
 import io.appium.java_client.AppiumDriver;
 
 /**
@@ -10,6 +9,6 @@ public interface MobileActor {
 
     AppiumDriver getDriver();
 
-    MobileAction login();
+    AppiumDriver initializeAppium();
 
 }

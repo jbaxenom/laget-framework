@@ -1,7 +1,7 @@
-package com.jbaxenom.laget.aao.actors;
+package com.jbaxenom.laget.aao.examples.actors;
 
-import com.jbaxenom.laget.aao.actions.ExampleWebAction;
 import com.jbaxenom.laget.aao.core.actors.WebAppActor;
+import com.jbaxenom.laget.aao.examples.actions.ExampleWebAction;
 
 /**
  * @author jbaxenom

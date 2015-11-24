@@ -1,5 +1,6 @@
-package com.jbaxenom.laget.webdriver.pages;
+package com.jbaxenom.laget.webdriver.pages.examples;
 
+import com.jbaxenom.laget.webdriver.pages.AbstractMobilePage;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;

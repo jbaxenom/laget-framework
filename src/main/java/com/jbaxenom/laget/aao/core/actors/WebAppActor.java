@@ -3,12 +3,16 @@ package com.jbaxenom.laget.aao.core.actors;
 import org.openqa.selenium.WebDriver;
 
 /**
- * Created by jbaxenom on 2014-08-19.
+ * Created by jbaxenom on 2015-11-04.
  */
-public class WebAppActor extends WebActor {
+public abstract class WebAppActor extends WebActor {
 
     private String username;
     private String password;
+
+    public WebAppActor() {
+        super();
+    }
 
     public WebAppActor(String username, String password) {
         this.username = username;

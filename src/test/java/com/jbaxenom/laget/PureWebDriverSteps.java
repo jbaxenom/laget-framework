@@ -1,6 +1,7 @@
 package com.jbaxenom.laget;
 
 import com.jbaxenom.laget.aao.core.actors.WebAppActor;
+import com.jbaxenom.laget.aao.examples.actors.ExampleWebUser;
 import com.jbaxenom.laget.configuration.Configuration;
 import com.jbaxenom.laget.cucumber.EnvironmentAwareContext;
 import com.jbaxenom.laget.webdriver.WebDriverBuilder;
@@ -78,7 +79,7 @@ public class PureWebDriverSteps {
 
     @Given("^there is a user with username \"([^\"]*)\" and password \"([^\"]*)\" in the system$")
     public void thereIsAUserWithUsernameAndPassword(String username, String password) {
-        WebAppActor user = new WebAppActor(username, password);
+        ExampleWebUser user = new ExampleWebUser(username, password);
         this.driver = user.getDriver();
         context.setLastActor(user);
     }

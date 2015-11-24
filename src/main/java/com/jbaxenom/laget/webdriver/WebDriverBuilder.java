@@ -3,6 +3,10 @@ package com.jbaxenom.laget.webdriver;
 import com.jbaxenom.laget.configuration.Browser;
 import com.jbaxenom.laget.configuration.Configuration;
 import com.saucelabs.common.SauceOnDemandAuthentication;
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -22,11 +26,12 @@ import java.util.concurrent.TimeUnit;
  */
 public class WebDriverBuilder {
 
-    private Browser browser = Browser.FIREFOX;
+    private Browser browser;
     private String version;
     private String os;
     private boolean useGrid = false;
     private URL gridUrl;
+    private String app;
     private ThreadLocal<String> sessionId = new ThreadLocal<>();
 
     public SauceOnDemandAuthentication authentication =
@@ -40,6 +45,8 @@ public class WebDriverBuilder {
     public WebDriverBuilder withGridUrl(String gridUrl) {
         try {
             switch (gridUrl) {
+                case "NO_GRID":
+                    break;
                 case "LOCAL_GRID":
                     this.gridUrl = new URL("http://localhost:4444/wd/hub");
                     useGrid = true;
@@ -54,8 +61,6 @@ public class WebDriverBuilder {
                                     + "@ondemand.saucelabs.com:80/wd/hub"
                     );
                     useGrid = true;
-                    break;
-                case "NO_GRID":
                     break;
                 default:
                     this.gridUrl = new URL(gridUrl);
@@ -78,18 +83,19 @@ public class WebDriverBuilder {
         return this;
     }
 
+    public WebDriverBuilder withApp(String app) {
+        this.app = app;
+        return this;
+    }
+
     public WebDriver build() {
 
-        WebDriver driver = null;
+        RemoteWebDriver driver;
+
         if (useGrid) {
             DesiredCapabilities capabilities = new DesiredCapabilities();
 
             capabilities.setCapability(CapabilityType.BROWSER_NAME, browser);
-
-            if (gridUrl.equals("LOCAL_APPIUM")) {
-                capabilities.setCapability("platformName", Configuration.platformName.get());
-                capabilities.setCapability("deviceName", Configuration.deviceName.get());
-            }
 
             if (version != null) {
                 capabilities.setCapability(CapabilityType.VERSION, version);
@@ -102,7 +108,7 @@ public class WebDriverBuilder {
             capabilities.setCapability("name", System.getProperty("SCENARIO_NAME"));
 
             driver = new RemoteWebDriver(gridUrl, capabilities);
-            this.sessionId.set(((RemoteWebDriver) driver).getSessionId().toString());
+            this.sessionId.set(driver.getSessionId().toString());
 
             System.setProperty("SESSION_ID", this.getSessionId());
         } else {
@@ -129,19 +135,70 @@ public class WebDriverBuilder {
                 case FIREFOX:
                     driver = new FirefoxDriver();
                     break;
+                default:
+                    throw new UnsupportedOperationException("The browser '" + browser + "' is not supported yet.");
             }
         }
 
-        driver.manage().timeouts().implicitlyWait(
-                Configuration.webDriverImplicitTimeout.getInt(),
-                TimeUnit.MILLISECONDS
-        );
+        setDriverTimeout(driver);
+        return driver;
+    }
+
+    public AppiumDriver buildMobile() {
+
+        AppiumDriver driver;
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+
+        String platformName = Configuration.platformName.get();
+
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, platformName);
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, Configuration.platformVersion.get());
+        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, Configuration.deviceName.get());
+        capabilities.setCapability(MobileCapabilityType.APPIUM_VERSION, Configuration.appiumVersion.get());
+
+        capabilities.setCapability("deviceOrientation", Configuration.deviceOrientation.get());
+
+        if (app != null) {  // if app specified browser needs to be ""
+            capabilities.setCapability(MobileCapabilityType.APP, app);
+        } else if (platformName.equals("iOS")) {
+            capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "Safari");
+        } else {
+            capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "Browser");
+        }
+
+        capabilities.setCapability("name", System.getProperty("SCENARIO_NAME"));
+
+        switch (platformName) {
+            case "iOS":
+                driver = new IOSDriver(gridUrl, capabilities);
+                break;
+            case "Android":
+                capabilities.setCapability("appPackage", Configuration.androidAppPackage.get());
+                capabilities.setCapability("appActivity", Configuration.androidAppActivity.get());
+                driver = new AndroidDriver(gridUrl, capabilities);
+                break;
+            default:
+                throw new UnsupportedOperationException("The platform '" + platformName + "' is not supported");
+        }
+
+        this.sessionId.set(driver.getSessionId().toString());
+
+        System.setProperty("SESSION_ID", this.getSessionId());
+
+        setDriverTimeout(driver);
 
         return driver;
     }
 
     public String getSessionId() {
         return this.sessionId.get();
+    }
+
+    private void setDriverTimeout(WebDriver driver) {
+        driver.manage().timeouts().implicitlyWait(
+                Configuration.webDriverImplicitTimeout.getInt(),
+                TimeUnit.MILLISECONDS
+        );
     }
 
 }

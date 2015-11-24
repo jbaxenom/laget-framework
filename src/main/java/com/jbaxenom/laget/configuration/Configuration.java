@@ -40,29 +40,27 @@ public enum Configuration {
     sauceLabsUser("sauceLabsUser"),
     sauceLabsKey("sauceLabsKey"),
 
+    apiUsername("APIUsername"),
+    apiPassword("APIPassword"),
+    apiSpecialHeaderName("APISpecialHeaderName"),
+    apiSpecialHeaderContent("APISpecialHeaderContent"),
+
     appiumGridUrl("appiumGridUrl"),
     platformName("platformName"),
+    platformVersion("platformVersion"),
     deviceName("deviceName"),
-    androidAppPath("androidAppPath"),
-    androidAppName("androidAppName"),
+    deviceOrientation("deviceOrientation"),
     androidAppPackage("androidAppPackage"),
     androidAppActivity("androidAppActivity"),
-    iosAppPath("iosAppPath"),
-    iosAppName("iosAppName");
+    mobileApp("app"),
+    appiumVersion("appiumVersion");
 
-
-    private String defaultValue;
     private final String key;
     private final static String CONFIG_FILE = "environment.properties";
     private final static Map<Configuration, String> configuration = new EnumMap<>(Configuration.class);
 
     Configuration(String key) {
-        this(key, "N/A");
-    }
-
-    Configuration(String key, String defaultValue) {
         this.key = key;
-        this.defaultValue = defaultValue;
     }
 
     static {
@@ -88,9 +86,14 @@ public enum Configuration {
      * (variable takes preference)
      */
     public static Environment getEnvironment() {
-        return (System.getenv("ENVIRONMENT") != null)
-                ? Environment.fromString(System.getenv("ENVIRONMENT"))
-                : Environment.fromString(environment.get());
+        if ((System.getenv("ENVIRONMENT") == null) && (environment.get().equals(""))) {
+            throw new UnsupportedOperationException("An environment has not been specified. Please specify it either" +
+                    " in ENVIRONMENT env variable or in environment.properties file");
+        } else {
+            return (System.getenv("ENVIRONMENT") != null)
+                    ? Environment.fromString(System.getenv("ENVIRONMENT"))
+                    : Environment.fromString(environment.get());
+        }
     }
 
     /**
@@ -98,19 +101,40 @@ public enum Configuration {
      * (variable takes preference)
      */
     public static Browser getBrowser() {
-        return (System.getenv("BROWSER") != null)
-                ? Browser.fromString(System.getenv("BROWSER"))
-                : Browser.fromString(webDriverBrowser.get());
+        if (System.getenv("BROWSER") == null && webDriverBrowser.get().equals("")) {
+            throw new UnsupportedOperationException("A browser has not been specified. Please specify it either" +
+                    " in BROWSER env variable or in environment.properties file");
+        } else {
+            return (System.getenv("BROWSER") != null)
+                    ? Browser.fromString(System.getenv("BROWSER"))
+                    : Browser.fromString(webDriverBrowser.get());
+        }
     }
 
-    public static String getBrowserVersion() {
+    public static String getBrowserVersion() { // Browser version is an optional parameter so we default to ""
         return (System.getenv("BROWSER_VERSION") != null)
                 ? System.getenv("BROWSER_VERSION")
                 : webDriverBrowserVersion.get();
     }
 
     public static String getOS() {
-        return (System.getenv("OS") != null) ? System.getenv("OS") : webDriverOS.get();
+        if (System.getenv("OS") != null) {    // Windows 8.1 already has a OS variable that defaults to Windows_NT for some reason
+            switch (System.getenv("OS")) {
+                case "Windows_NT":
+                    if (webDriverOS.get().equals("")) {
+                        return "Windows 8.1";
+                    } else {
+                        return webDriverOS.get();
+                    }
+                default:
+                    return System.getenv("OS");
+            }
+        } else if (webDriverOS.get().equals("")) {
+            throw new UnsupportedOperationException("A OS has not been specified. Please specify it either" +
+                    " in OS env variable or in environment.properties file");
+        } else {
+            return webDriverOS.get();
+        }
     }
 
     /**
@@ -118,9 +142,29 @@ public enum Configuration {
      * file (variable takes preference)
      */
     public static String getGridUrl() {
-        return (System.getenv("GRID") != null)
-                ? System.getenv("GRID")
-                : webDriverGridUrl.get();
+        if (System.getenv("GRID") == null && webDriverGridUrl.get().equals("")) {
+            throw new UnsupportedOperationException("A grid mode has not been specified. Please specify it either" +
+                    " in GRID env variable or in environment.properties file");
+        } else {
+            return (System.getenv("GRID") != null)
+                    ? System.getenv("GRID")
+                    : webDriverGridUrl.get();
+        }
+    }
+
+    /**
+     * @return the Selenium Grid HUB URL where tests will be run, set in either environmental variable or the properties
+     * file (variable takes preference)
+     */
+    public static String getAppPath() {
+        if (System.getenv("APP") == null && mobileApp.get().equals("")) {
+            throw new UnsupportedOperationException("An app path has not been specified. Please specify it either" +
+                    " in APP env variable or in environment.properties file");
+        } else {
+            return (System.getenv("APP") != null)
+                    ? System.getenv("APP")
+                    : mobileApp.get();
+        }
     }
 
     private static void readConfigurationFrom(String fileName) {
@@ -148,7 +192,7 @@ public enum Configuration {
 
     private static void populateDefaultValues() {
         for (Configuration c : values()) {
-            configuration.put(c, c.defaultValue);
+            configuration.put(c, "");
         }
     }
 

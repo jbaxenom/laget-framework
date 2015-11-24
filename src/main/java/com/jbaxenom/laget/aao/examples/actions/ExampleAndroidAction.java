@@ -1,7 +1,7 @@
-package com.jbaxenom.laget.aao.actions;
+package com.jbaxenom.laget.aao.examples.actions;
 
 import com.jbaxenom.laget.aao.core.actions.MobileAction;
-import com.jbaxenom.laget.webdriver.pages.ExampleAndroidLoginPage;
+import com.jbaxenom.laget.webdriver.pages.examples.ExampleAndroidLoginPage;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.WebDriverException;
 

@@ -54,7 +54,7 @@ Tests ALWAYS follow the same pattern. If you think about it, we always do the sa
     Someone does something on that SUT
     We compare the result with the expectation
 
-LAGET implements this idea by adapting Meza's brilliant [AAO](https://github.com/meza/AAO) library to encapsulating REST 
+LAGET implements this idea by adapting Meza's brilliant [AAO](https://github.com/meza/AAO) library to encapsulate REST 
 calls, web page and mobile interactions into action objects which are executed by actor objects that pre-define whatever 
 data the user would need to interact with the app(s). This allows for Framework users with little technical experience 
 to create tests easily, as they can just use whatever actions are available for the actors that are implemented.
@@ -235,8 +235,8 @@ The browser where the test will be run. List of browsers supported:
     FIREFOX     # Mozilla's baby (default value)
     CHROME      # Google's RAM-eating monster that works too well
     SAFARI      # Apple's option for your hipster browsing needs
-    IE          # Microsoft's browser, allegedly only used in China
-    PHANTOMJS   # Headless browser that runs pure HTML/JS without rendering in a GUI. Usually must faster, but less 
+    IE          # Microsoft's browser allegedly only used in China
+    PHANTOMJS   # Headless browser that runs pure HTML/JS without rendering in a GUI. Usually much faster but less 
                   compatible with your super cool JS scripts so use with care
 
 

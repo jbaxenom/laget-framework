@@ -1,7 +1,7 @@
-package com.jbaxenom.laget.aao.actions;
+package com.jbaxenom.laget.aao.examples.actions;
 
 import com.jbaxenom.laget.aao.core.actions.WebAction;
-import com.jbaxenom.laget.webdriver.pages.ExampleWebPage;
+import com.jbaxenom.laget.webdriver.pages.examples.ExampleWebPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 

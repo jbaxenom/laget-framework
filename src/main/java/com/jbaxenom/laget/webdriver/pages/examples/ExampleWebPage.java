@@ -1,5 +1,6 @@
-package com.jbaxenom.laget.webdriver.pages;
+package com.jbaxenom.laget.webdriver.pages.examples;
 
+import com.jbaxenom.laget.webdriver.pages.AbstractWebPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

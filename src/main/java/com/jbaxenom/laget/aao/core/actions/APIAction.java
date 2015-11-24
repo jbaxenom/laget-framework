@@ -1,6 +1,6 @@
 package com.jbaxenom.laget.aao.core.actions;
 
-import com.jbaxenom.laget.api.entities.AuthorisedUser;
+import com.jbaxenom.laget.api.entities.APICredentials;
 import com.jbaxenom.laget.api.message_calls.RestCall;
 import com.jbaxenom.laget.api.payloads.Payload;
 import hu.meza.aao.Action;
@@ -15,7 +15,7 @@ public abstract class APIAction implements Action {
     protected HttpClientWrapper client;
     protected String url;
     protected Payload payload;
-    protected AuthorisedUser authorisedUser;
+    protected APICredentials credentials;
     protected RestCall call;
 
     /**
@@ -24,13 +24,13 @@ public abstract class APIAction implements Action {
      * @param client
      * @param url
      * @param payload
-     * @param authorisedUser
+     * @param credentials
      */
-    public APIAction(HttpClientWrapper client, String url, Payload payload, AuthorisedUser authorisedUser) {
+    public APIAction(HttpClientWrapper client, String url, Payload payload, APICredentials credentials) {
         this.client = client;
         this.url = url;
         this.payload = payload;
-        this.authorisedUser = authorisedUser;
+        this.credentials = credentials;
     }
 
     /**
@@ -38,12 +38,12 @@ public abstract class APIAction implements Action {
      *
      * @param client
      * @param url
-     * @param authorisedUser
+     * @param credentials
      */
-    public APIAction(HttpClientWrapper client, String url, AuthorisedUser authorisedUser) {
+    public APIAction(HttpClientWrapper client, String url, APICredentials credentials) {
         this.client = client;
         this.url = url;
-        this.authorisedUser = authorisedUser;
+        this.credentials = credentials;
     }
 
     /**
@@ -63,15 +63,15 @@ public abstract class APIAction implements Action {
     public abstract void execute();
 
     public boolean isSuccessful() {
-        return call.isSuccessful();
+        return call.wasSuccessful();
     }
 
     public boolean isError() {
-        return call.isError();
+        return call.wasError();
     }
 
     public String getResponseStatusCode() {
-        return call.getStatusCode();
+        return call.getResponseStatusCode();
     }
 
     /**
