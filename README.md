@@ -13,12 +13,6 @@ compendium of core settings, methodologies, best practices and tools that will m
 tests for Desktop Web, Mobile Web and Mobile apps as well as API tests for RESTfull webservices.
 
 LAGET defines 3 different but complementary layers: "Behavior", "Domain" and "Interactions", which are explained below. 
-With the goal of maximizing the usefulness of the framework and thus removing unnecessary overhead for more technical 
-testers, LAGET will be offered in 2 flavours: LAGET-DD (or simply LAGET) and LAGET-LITE. LAGET-DD (Domain-Driven), which 
-is my recommended option, is prepared to use all the layers combined, whilst LAGET-LITE removes the Domain Layer to go 
-"straight to the point" and combine Cucumber and Selenium and/or REST calls. This repository contains LAGET-DD. 
-LAGET-LITE will be added soon as a separated repository. 
-
 Thanks to this adaptative approach, LAGET has successfully been used to teach non-technical testers how to use Cucumber,
 Selenium, Appium, Cloud Testing, Continuous Integration and several other tools and methodologies related to Agile
 Testing. 
@@ -26,103 +20,43 @@ Testing.
 So as good Agile testers we are, give it a try, see if you like it, ask questions and feel free to experiment, change and
 improve it!
 
-# LAGET Layers Explained
+# Features and Capabilities
 
-## Behavior Layer (Cucumber)
+LAGET was designed to provide tools to test: 
+- Websites in both desktop and mobile browsers,
+- Native and Hybrid mobile apps, and
+- RESTful webservices
 
-Behavior-Driven Development aims to provide a common language to represent business features through different scenarios
-that contain several steps. Scenarios implement user stories from their own perspective, which is at the same time the 
-functional acceptance criteria for that application. [Cucumber](https://cucumber.io/) is an implementation of BDD that 
-uses [gherkin notation](https://github.com/cucumber/cucumber/wiki/Gherkin) (Given, When, Then, And) as the common 
-language framework.
+And as most frameworks, it aims to make your testing work a lot easier by giving you a head start in many areas we 
+testers always have to cover:
 
-In cucumber, statements implement parameter mapping, for instance:
-
-    “^(.*) sends the \"(.*)\" REST call to (.*)$”
-
-becomes 
-
-    public void sendRESTCall(String sender, String call, String receiver) { }
-    
-Which provides a simple way to script the tests to make them more dynamic, as steps are reusable between different
-scenarios and even feature files.
-
-## Domain Layer
-
-Tests ALWAYS follow the same pattern. If you think about it, we always do the same:
- 
-    We have a System Under Test in a particular state
-    Someone does something on that SUT
-    We compare the result with the expectation
-
-LAGET implements this idea by adapting Meza's brilliant [AAO](https://github.com/meza/AAO) library to encapsulate REST 
-calls, web page and mobile interactions into action objects which are executed by actor objects that pre-define whatever 
-data the user would need to interact with the app(s). This allows for Framework users with little technical experience 
-to create tests easily, as they can just use whatever actions are available for the actors that are implemented.
-
-### AAO + Cucumber
-
-AAO combines perfectly with Cucumber to provide a systematic, trivial approach to implement test steps: 
-
- - In the `Given` steps we use test data to define the `Actor`
- - During the `When` steps, the `Actor` performs a set of `Actions`
- - Finally in the `Then` steps we assert the `Outcomes` of these actions against their expected behaviour
+- It supports **parameterized test runs** through both a configuration file (environment.properties) and/or using 
+  environmental variables, which allow for easy integration with CI tools.
+- It supports both **local and remote test runs** via Selenium Grid. When creating GUI tests the framework will 
+  automatically generate the right instance of WebDriver/AppiumDriver depending on the parameters set for the test run.
+- As an extension to the previous point, LAGET has out-of-the-box **integration with SauceLabs**, including sending the 
+  proper test name and its result. You just need to specify your username and key in the configuration file. 
+- It **supports Chrome, Firefox, IE, Safari and PhantomJS** desktop browsers and provides standard configuration for 
+  both **iOS and Android apps** with Appium. It also includes parameters to setup the browser servers (whose last 
+  versions are included in the repository)
+- It understands the concept of **"test environments"**: by setting the different environment's URLs in the 
+  environment.properties file, LAGET will automatically point to the ones corresponding to the ENVIRONMENT parameter. 
+  This means you can run your tests in different environments just by changing one parameter/environmental variable. 
+- It implements the most common **Page Object helpers** for both WebDriver and Appium, which can be used via extending 
+  the Abstract pages provided
+- It provides an out-of-the-box solution to **run cucumber-jvm parallel tests** and aggregate the reports into one 
+  nice-looking HTML
+- It provides **test data tools** in the form of entities, actors and actions that can process and parse **JSON data** 
+  and **SQL queries**
+- It **will (hopefully soon) integrate with JIRA and Zephyr plugin for JIRA** so that your test runs can be fully 
+  managed directly from these famous project and test management tools. 
 
 
-## Interactions Layer
+# LAGET Layers
 
-None of the above would be useful if we could not interact with our SUTs (System Under Test), and LAGET provides tons
-of tester candy in this area! LAGET was designed to test websites in both desktop and mobile devices, mobile apps
-and REST-full webservices, and it makes your work a lot easier by:
-
-- Supporting parametrized test runs through configuration file (environment.properties) and/or environmental variables 
-  (for easy integration with CI tools)
-- Supporting both local test runs (browser or grid in both desktop and mobile) and remote test runs, including 
-  out-of-the-box integration with SauceLabs
-- Supporting Chrome, Firefox, IE, Safari and PhantomJS browsers and providing standard configuration for both iOS and
-  Android apps. It also includes parameters to setup the browser servers, which are also included in the repository
-- Implementing seamless setup of different test environments for both web and integration tests. The framework will point 
-  to the right environment URL's just by setting them in the environment.properties file
-- Providing the most common Page Object helpers for both WebDriver and Appium (through Abstract pages)
-- Providing out-of-the-box solution to run parallel tests and aggregate the reports into one nice-looking HTML
-- Providing some nice test data tools, specially for writing and reading REST payloads
- 
-### Selenium WebDriver 
-
-Selenium WebDriver is an Open Source API that communicates directly with browsers through drivers. IT uses OO notation 
-to define typical elements and interactions in any website: WebElement, Wait, FirefoxDriver (ChromeDriver, etc.). 
-Selenium can run concurrently and remote through Selenium Grid, it is constantly improved and has a very active 
-community.
-
-LAGET provides abstract structures that contain the most common helpers you always have to implement from scratch when
-using Selenium. It also provides examples in how to apply best practices. 
-
-### Appium
-
-Appium makes interactions with Android and IOS native, hybrid or web apps completely transparent by using their own 
-AndroidDriver and IOSDriver implementations. As it is based in WebDriver it can be seamlessly integrated in web GUI 
-frameworks. 
-
-LAGET provides dedicated Actors and Actions ready to interact with mobile devices, which adds a further abstraction 
-level to make it even easier. 
-
-### Page Objects
-
-Page Objects are a OO representation of a web page that uses the WebDriver API to abstract the structure of the website 
-from the user interactions. The attributes of these classes are WebDriver’s WebElement objects, which require a unique 
-web element locator and provide all the possible interactions with the element. The methods are interactions, presence 
-verifications and actions.
-
-Some other good properties of Page Object pattern are:
-
-- Method chaining allows to implement actions or flows in a more readable way
-- Interactions and actions always return another page object.
-- Lazy Initialization: web elements are not looked up until they are used in the test!
-
-
-### API Layer (REST tools)
-
-Explanation coming soon!
+Please go to the [LAGET Layers Explained](https://github.com/jbaxenom/laget-framework/wiki/LAGET-Layers-Explained)
+page in the wiki for an extensive explanation about how LAGET can help you learn test automation whilst providing great 
+tools for it.
 
 
 # Package Structure
@@ -241,53 +175,12 @@ The browser where the test will be run. List of browsers supported:
                   compatible with your super cool JS scripts so use with care
 
 
-There are 3 ways of running tests: using `ant`, using `maven` or using your preferred programming IDE.
+# Running Tests
 
-# Running Tests with Ant
+Please go to the [Running Tests](https://github.com/jbaxenom/laget-framework/wiki/Running-Tests) page in the wiki
+to see how to use the different runners the framework provides.
 
-The `ant` build contains a predefined parallel cross-browser test run meant to be run in the SAUCE grid environment only. 
-It is configured by the `build.xml` file in the root folder. You can set a couple of parameters for the run: ENVIRONMENT 
-and SUITE. ENVIRONMENT is the variable explained above, whereas SUITE lets you set the cucumber tag for the tests to run.
+# Roadmap
 
-To run the ant build, simply type `ant` in the root folder of the test framework. Everything else is automatic! 
-
-The framework will also build a nice HTML test report with the aggregated results from all the parallel runs. It can be 
-located in `LAGET/reports` and the time and date with format "MM.dd_HH.mm.ss". Just open the file 
-`cucumber/feature-overview.html` to get a complete and beautiful status of your tests. 
-
-
-# Running Tests with Maven
-
-This is the default way of running tests. The standard phases of the maven project will run all the test suites, which 
-is often not very convenient, but luckily the cucumber test runner provides some options to select the suite to run or 
-change the output format.
-
-Examples:
-
-    mvn clean install -Dcucumber.options="--tags @pure_webdriver"
-
-Will run all the tests with tag "@quinext" in a local Firefox in the "test" environment. Please note that you can tag
-both features or single scenarios!
-
-    ENVIRONMENT=DEV GRID=LOCAL BROWSER=CHROME mvn clean test -Dcucumber.options="--tags @pure_webdriver"
-
-Will run the same test in the local Dev environment, using an already running local Selenium Grid and Chrome browser.
-
-    mvn clean install -Dcucumber.options="'src/test/resources/com/jbaxenom/LAGET/Pure WebDriver POC.feature:7'"
-
-Will run only the scenario on line 7 of the feature "Pure WebDriver POC", which corresponds to the first scenario,
-in your local Firefox and pointing to the "test" environment.
-
-If you want to know more about how to run maven you can check [their website](https://maven.apache.org/run-maven/index.html). Options for the cucumber
-command line can be found [here](https://cucumber.io/docs/reference/jvm) or by running `mvn clean install -Dcucumber.options="--help"`.
-
-# Running Tests in your IDE
-
-Most of the more common IDE's have a cucumber plugin that can be use to run tests in the same way you run normal JUnit 
-tests. IntelliJ for instance allows running tests by:
- 
- - Right-clicking on a feature file and clicking `Run 'Feature: <feature name>'`
- - Opening a feature file, right-clicking on a `Feature` tag and clicking `Run 'Feature: <feature name>'`
- - Opening a feature file, right-clicking on a `Scenario` tag and clicking `Run 'Scenario: <scenario name>'`
- - Right-clicking on the `RunCucumberTest.java` file in `test/java/com.jbaxenom.laget` and clicking `Run RunCucumberTest`
- - Right-clicking on the project root and selecting `Run` -> `All Features in: LAGET`
+Please go the [Roadmap](https://github.com/jbaxenom/laget-framework/wiki/Roadmap) page in the wiki to see some of the 
+features I'm planning on adding to the LAGET framework.
