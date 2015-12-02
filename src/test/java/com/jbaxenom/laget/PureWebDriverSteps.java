@@ -4,7 +4,6 @@ import com.jbaxenom.laget.aao.core.actors.WebAppActor;
 import com.jbaxenom.laget.aao.examples.actors.ExampleWebUser;
 import com.jbaxenom.laget.configuration.Configuration;
 import com.jbaxenom.laget.cucumber.EnvironmentAwareContext;
-import com.jbaxenom.laget.webdriver.WebDriverBuilder;
 import com.saucelabs.saucerest.SauceREST;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -84,18 +83,13 @@ public class PureWebDriverSteps {
         context.setLastActor(user);
     }
 
-    @Given("^the (.*) opens the page \"([^\"]*)\"$")
-    public void theUserOpensThePage(String user, String url) {
-        if (driver == null) {
-            driver = new WebDriverBuilder()
-                    .withBrowser(Configuration.getBrowser())
-                    .withBrowserVersion(Configuration.getBrowserVersion())
-                    .withOS(Configuration.getOS())
-                    .withGridUrl(Configuration.getGridUrl())
-                    .build();
+    @Given("^he opens the page \"([^\"]*)\"$")
+    public void theUserOpensThePage(String url) {
+        if (context.getLastActor() == null) {
+            thereIsAUserWithUsernameAndPassword("", "");
         }
 
-        driver.get(url);
+        ((ExampleWebUser) context.getLastActor()).openURL(url);
     }
 
     @Given("^he maximises the window$")
