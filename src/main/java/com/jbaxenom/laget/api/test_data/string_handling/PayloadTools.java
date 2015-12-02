@@ -12,7 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 /**
- * Created by jbaxenom on 2014-07-24.
+ * @author jbaxenom on 7/24/14.
  */
 public class PayloadTools {
 

@@ -1,7 +1,7 @@
 package com.jbaxenom.laget.api.entities;
 
 /**
- * Created by jbaxenom on 4/30/14.
+ * @author jbaxenom on 4/30/14.
  */
 public class APICredentials {
 

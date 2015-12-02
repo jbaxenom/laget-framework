@@ -1,7 +1,7 @@
 package com.jbaxenom.laget.configuration;
 
 /**
- * Created by jbaxenom on 2014-06-25.
+ * @author jbaxenom on 6/25/14.
  */
 public enum Environment {
 

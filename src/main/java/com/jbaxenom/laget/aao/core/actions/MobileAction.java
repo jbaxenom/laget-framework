@@ -7,7 +7,7 @@ import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebDriverException;
 
 /**
- * Created by jbaxenom on 4/6/14.
+ * @author jbaxenom on 4/6/14.
  */
 public abstract class MobileAction implements Action {
 

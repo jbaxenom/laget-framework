@@ -1,7 +1,7 @@
 package com.jbaxenom.laget.api.test_data;
 
 /**
- * Created by jbaxenom on 2014-07-23.
+ * @author jbaxenom on 7/23/14.
  */
 public class Luhn {
 

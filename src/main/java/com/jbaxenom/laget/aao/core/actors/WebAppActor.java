@@ -3,7 +3,7 @@ package com.jbaxenom.laget.aao.core.actors;
 import org.openqa.selenium.WebDriver;
 
 /**
- * Created by jbaxenom on 2015-11-04.
+ * @author jbaxenom on 4/11/15.
  */
 public abstract class WebAppActor extends WebActor {
 

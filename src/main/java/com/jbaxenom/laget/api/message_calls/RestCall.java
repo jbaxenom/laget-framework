@@ -13,7 +13,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 /**
- * Created by jbaxenom on 2014-11-21.
+ * @author jbaxenom on 11/21/14.
  */
 public class RestCall {
 

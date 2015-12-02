@@ -6,7 +6,7 @@ import org.json.JSONObject;
 import java.util.Iterator;
 
 /**
- * Created by jbaxenom on 2014-06-11.
+ * @author jbaxenom on 6/11/14.
  */
 public class Payload {
 

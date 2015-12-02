@@ -8,7 +8,7 @@ import hu.meza.tools.HttpClientWrapper;
 import org.json.JSONObject;
 
 /**
- * Created by chema.delbarco on 11/11/14.
+ * @author jbaxenom on 11/11/14.
  */
 public abstract class APIAction implements Action {
 

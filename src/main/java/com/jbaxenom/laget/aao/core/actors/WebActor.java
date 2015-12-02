@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by jbaxenom on 2014-08-19.
+ * @author jbaxenom on 8/19/14.
  */
 public abstract class WebActor extends Actor {
 

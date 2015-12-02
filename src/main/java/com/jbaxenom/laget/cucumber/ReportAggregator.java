@@ -15,7 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by jbaxenom on 13/04/15.
+ * Cucumber report aggregator based on ...
+ *
+ * @author jbaxenom on 4/13/15.
  */
 public class ReportAggregator {
 

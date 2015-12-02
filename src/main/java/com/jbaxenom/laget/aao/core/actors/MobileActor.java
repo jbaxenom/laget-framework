@@ -3,7 +3,7 @@ package com.jbaxenom.laget.aao.core.actors;
 import io.appium.java_client.AppiumDriver;
 
 /**
- * Created by jbaxenom on 2014-08-19.
+ * @author jbaxenom on 8/19/14.
  */
 public interface MobileActor {
 

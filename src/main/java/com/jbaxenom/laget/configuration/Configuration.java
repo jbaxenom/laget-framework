@@ -7,21 +7,19 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * Created by jbaxenom on 03/01/15
+ * @author jbaxenom on 3/1/15
  */
 public enum Configuration {
 
     devAPIEndpoint("devAPIEndpoint"),
     integrationAPIEndpoint("integrationAPIEndpoint"),
     stagingAPIEndpoint("stagingAPIEndpoint"),
-    perftestAPIEndpoint("perftestAPIEndpoint"),
     testdriveAPIEndpoint("testdriveAPIEndpoint"),
     productionAPIEndpoint("productionAPIEndpoint"),
 
     devWebUrl("devWebUrl"),
     integrationWebUrl("integrationWebUrl"),
     stagingWebUrl("stagingWebUrl"),
-    perftestWebUrl("perftestWebUrl"),
     testdriveWebUrl("testdriveWebUrl"),
     productionWebUrl("productionWebUrl"),
 
@@ -44,6 +42,11 @@ public enum Configuration {
     apiPassword("APIPassword"),
     apiSpecialHeaderName("APISpecialHeaderName"),
     apiSpecialHeaderContent("APISpecialHeaderContent"),
+
+    sqlDriver("SQLDriver"),
+    sqlDatabaseUrl("SQLDatabaseUrl"),
+    sqlUsername("SQLUsername"),
+    sqlPassword("SQLPassword"),
 
     appiumGridUrl("appiumGridUrl"),
     platformName("platformName"),

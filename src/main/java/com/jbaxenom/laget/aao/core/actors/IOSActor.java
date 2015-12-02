@@ -6,7 +6,7 @@ import hu.meza.aao.Actor;
 import io.appium.java_client.ios.IOSDriver;
 
 /**
- * Created by jbaxenom on 2014-08-19.
+ * @author jbaxenom on 8/19/14.
  */
 public abstract class IOSActor extends Actor implements MobileActor {
 

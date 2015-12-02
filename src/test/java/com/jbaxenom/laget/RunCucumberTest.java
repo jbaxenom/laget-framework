@@ -10,11 +10,13 @@ import org.junit.Rule;
 import org.testng.annotations.AfterClass;
 
 /**
- * Created by jbaxenom on 5/6/14.
+ * @author jbaxenom on 5/6/14.
  */
-@CucumberOptions(features = "src/test/resources/com/jbaxenom/laget",
+@CucumberOptions(
+        features = "src/test/resources/com/jbaxenom/laget",
         plugin = {"pretty", "html:target/cucumber"},
-        glue = "com.jbaxenom.laget")
+        glue = "com.jbaxenom.laget"
+)
 public class RunCucumberTest extends AbstractTestNGCucumberTests implements SauceOnDemandSessionIdProvider {
 
     public SauceOnDemandAuthentication authentication =
