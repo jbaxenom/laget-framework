@@ -1,7 +1,7 @@
 package com.jbaxenom.laget;
 
-import com.jbaxenom.laget.aao.core.actors.WebAppActor;
-import com.jbaxenom.laget.aao.examples.actors.ExampleWebUser;
+import com.jbaxenom.laget.domain.core.actors.WebAppActor;
+import com.jbaxenom.laget.domain.examples.actors.ExampleWebUser;
 import com.jbaxenom.laget.configuration.Configuration;
 import com.jbaxenom.laget.cucumber.EnvironmentAwareContext;
 import com.saucelabs.saucerest.SauceREST;

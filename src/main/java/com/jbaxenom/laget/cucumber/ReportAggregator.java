@@ -3,7 +3,7 @@ package com.jbaxenom.laget.cucumber;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.jbaxenom.laget.api.test_data.string_handling.PayloadTools;
+import com.jbaxenom.laget.interactions.api.test_data.string_handling.PayloadTools;
 import com.jbaxenom.laget.configuration.Configuration;
 import net.masterthought.cucumber.ReportBuilder;
 import org.apache.commons.lang3.StringUtils;
