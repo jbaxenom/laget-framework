@@ -30,6 +30,7 @@ public enum Configuration {
     webDriverBrowserVersion("webDriverBrowserVersion"),
     webDriverOS("webDriverOS"),
     webDriverImplicitTimeout("webDriverImplicitTimeout"),
+    webDriverGeckoDriverBinPath("webDriverGeckoDriverBinPath"),
     webDriverChromeDriverBinPath("webDriverChromeDriverBinPath"),
     webDriverIEDriver64BinPath("webDriverIEDriver64BinPath"),
     webDriverIEDriver32BinPath("webDriverIEDriver32BinPath"),
