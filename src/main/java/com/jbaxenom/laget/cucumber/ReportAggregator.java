@@ -42,6 +42,7 @@ public class ReportAggregator {
         for (String jsonReport : list) {
 
             String payload = PayloadTools.getPayloadFromFile(jsonReport);
+
             String featureName = PayloadTools.getFieldValueInPayload(payload, "name");
             String os = StringUtils.substringBetween(jsonReport, "/cucumber/", "-").toUpperCase();
             String browser = StringUtils.substringBetween(jsonReport, "-", ".").toUpperCase();
@@ -69,16 +70,11 @@ public class ReportAggregator {
 
         String projectName = "latef";
 
-        boolean skippedFails = true;
-        boolean pendingFails = false;
-        boolean undefinedFails = true;
-        boolean missingFails = true;
         boolean runWithJenkins = false;
         boolean parallelTesting = false;
 
         Configuration configuration = new Configuration(reportOutputDirectory, projectName);
 
-        configuration.setStatusFlags(skippedFails, pendingFails, undefinedFails, missingFails);
         configuration.setParallelTesting(parallelTesting);
         configuration.setRunWithJenkins(runWithJenkins);
 
