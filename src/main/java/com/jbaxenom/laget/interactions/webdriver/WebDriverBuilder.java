@@ -133,6 +133,7 @@ public class WebDriverBuilder {
                     driver = new PhantomJSDriver();
                     break;
                 case FIREFOX:
+                    System.setProperty("webdriver.gecko.driver", Configuration.webDriverGeckoDriverBinPath.get());
                     driver = new FirefoxDriver();
                     break;
                 default:

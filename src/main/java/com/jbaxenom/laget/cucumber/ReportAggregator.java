@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.jbaxenom.laget.interactions.api.test_data.string_handling.PayloadTools;
-import com.jbaxenom.laget.configuration.Configuration;
+import net.masterthought.cucumber.Configuration;
 import net.masterthought.cucumber.ReportBuilder;
 import org.apache.commons.lang3.StringUtils;
 
@@ -37,15 +37,17 @@ public class ReportAggregator {
         list.add("reports/" + timestamp + "/cucumber/windows81-ie11.json");
         list.add("reports/" + timestamp + "/cucumber/windows7-ie11.json");
 
+
         // Add os, browser and version to the feature names in the json reports for distinguishing between runs
         for (String jsonReport : list) {
 
             String payload = PayloadTools.getPayloadFromFile(jsonReport);
+
             String featureName = PayloadTools.getFieldValueInPayload(payload, "name");
             String os = StringUtils.substringBetween(jsonReport, "/cucumber/", "-").toUpperCase();
             String browser = StringUtils.substringBetween(jsonReport, "-", ".").toUpperCase();
             String newFeatureName = featureName + " [ " + os + " | " + browser + " | "
-                    + Configuration.getEnvironment().toString() + " ] ";
+                    + com.jbaxenom.laget.configuration.Configuration.getEnvironment().toString() + " ] ";
 
             try {
                 ArrayNode root = (ArrayNode) new ObjectMapper().readTree(payload);
@@ -65,26 +67,19 @@ public class ReportAggregator {
     }
 
     private static void buildReport(List<String> list, File reportOutputDirectory) {
-        String pluginUrlPath = "";
-        String buildNumber = "1";
-        String buildProject = "cucumber-jvm";
-        boolean skippedFails = false;
-        boolean undefinedFails = false;
-        boolean flashCharts = true;
-        boolean runWithJenkins = false;
-        boolean artifactsEnabled = false;
-        String artifactConfig = "";
-        boolean highCharts = false;
 
-        ReportBuilder reportBuilder;
-        try {
-            reportBuilder = new ReportBuilder(list, reportOutputDirectory, pluginUrlPath, buildNumber,
-                    buildProject, skippedFails, undefinedFails, flashCharts, runWithJenkins, artifactsEnabled,
-                    artifactConfig, highCharts);
-            reportBuilder.generateReports();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        String projectName = "latef";
+
+        boolean runWithJenkins = false;
+        boolean parallelTesting = false;
+
+        Configuration configuration = new Configuration(reportOutputDirectory, projectName);
+
+        configuration.setParallelTesting(parallelTesting);
+        configuration.setRunWithJenkins(runWithJenkins);
+
+        ReportBuilder reportBuilder = new ReportBuilder(list, configuration);
+        reportBuilder.generateReports();
     }
 
 }
