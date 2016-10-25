@@ -104,7 +104,7 @@ public class PureWebDriverSteps {
 
         switch (action) {
             case "the example":
-                context.setLastAction(user.login());
+                context.setLastAction(user.exampleWebAction());
                 break;
             default:
                 throw new UnsupportedOperationException("The action '" + action + "' is not supported yet.");
