@@ -21,9 +21,12 @@ import java.util.Date;
 public abstract class WebActor extends Actor {
 
     private final ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>() {
-        @Override protected WebDriver initialValue() {
+
+        @Override
+        protected WebDriver initialValue() {
             return initializeWebDriver();
         }
+
     };
 
     // Actions
@@ -48,6 +51,12 @@ public abstract class WebActor extends Actor {
 
     public WebDriver getDriver() {
         return driver.get();
+    }
+
+    public void closeBrowser() {
+        if (driver.get() != null) {
+            driver.get().quit();
+        }
     }
 
     /**
