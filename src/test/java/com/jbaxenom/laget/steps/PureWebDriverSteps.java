@@ -1,6 +1,7 @@
-package com.jbaxenom.laget;
+package com.jbaxenom.laget.steps;
 
 import com.jbaxenom.laget.domain.core.actors.WebAppActor;
+import com.jbaxenom.laget.domain.examples.actions.ExampleWebAction;
 import com.jbaxenom.laget.domain.examples.actors.ExampleWebUser;
 import com.jbaxenom.laget.configuration.Configuration;
 import com.jbaxenom.laget.cucumber.EnvironmentAwareContext;
@@ -83,7 +84,7 @@ public class PureWebDriverSteps {
         context.setLastActor(user);
     }
 
-    @Given("^he opens the page \"([^\"]*)\"$")
+    @Given("^(?:he|the user|a user) opens the page \"([^\"]*)\"$")
     public void theUserOpensThePage(String url) {
         if (context.getLastActor() == null) {
             thereIsAUserWithUsernameAndPassword("", "");
@@ -92,12 +93,25 @@ public class PureWebDriverSteps {
         ((ExampleWebUser) context.getLastActor()).openURL(url);
     }
 
-    @Given("^he maximises the window$")
+    @Given("^(?:he|the user|a user) maximises the window$")
     public void heMaximisesTheWindow() {
         driver.manage().window().maximize();
     }
 
-    @When("^he types his ([^\"]*) in the element with ([^\"]*) \"(.*)\"$")
+    @When("(?:he|the user|a user) (?:performs|does|executes) ([^\"]*) action")
+    public void hePerformsAnAction(String action) {
+        ExampleWebUser user = (ExampleWebUser) context.getLastActor();
+
+        switch (action) {
+            case "the example":
+                context.setLastAction(user.login());
+                break;
+            default:
+                throw new UnsupportedOperationException("The action '" + action + "' is not supported yet.");
+        }
+    }
+
+    @When("^(?:he|the user|a user) types his ([^\"]*) in the element with ([^\"]*) \"(.*)\"$")
     public void heTypesHisCredentialInElement(String field, String locatorType, String locator) {
         String text;
         switch (field) {
@@ -114,12 +128,12 @@ public class PureWebDriverSteps {
         driver.findElement(locateElement(locatorType, locator)).sendKeys(text);
     }
 
-    @When("^he types \"([^\"]*)\" in the element with ([^\"]*) \"(.*)\"$")
+    @When("^(?:he|the user|a user) types \"([^\"]*)\" in the element with ([^\"]*) \"(.*)\"$")
     public void heTypesSomethingInElement(String text, String locatorType, String locator) {
         driver.findElement(locateElement(locatorType, locator)).sendKeys(text);
     }
 
-    @When("^he (?!types)(.*) in the element with ([^\"]*) \"(.*)\"$")
+    @When("^(?:he|the user|a user) (?!types)(.*) in the element with ([^\"]*) \"(.*)\"$")
     public void heDoesSomethingInTheElement(String action, String locatorType, String locator) {
         WebElement element = driver.findElement(locateElement(locatorType, locator));
 
@@ -141,7 +155,7 @@ public class PureWebDriverSteps {
         }
     }
 
-    @When("^he presses the \"(.*)\" key on the element with ([^\"]*) \"(.*)\"$")
+    @When("^(?:he|the user|a user) presses the \"(.*)\" key on the element with ([^\"]*) \"(.*)\"$")
     public void hePressesTheKeyInAnElement(String key, String locatorType, String locator) {
         Actions builder = new Actions(driver);
         Keys keyName;
@@ -155,7 +169,7 @@ public class PureWebDriverSteps {
         builder.sendKeys(driver.findElement(locateElement(locatorType, locator)), keyName).build().perform();
     }
 
-    @When("^he presses the \"(.*)\" key$")
+    @When("^(?:he|the user|a user) presses the \"(.*)\" key$")
     public void hePressesTheKey(String key) {
         Actions builder = new Actions(driver);
         Keys keyName;
@@ -169,6 +183,10 @@ public class PureWebDriverSteps {
         builder.sendKeys(keyName).build().perform();
     }
 
+    @Then("it is successful")
+    public void theActionIsSuccessful() {
+        assertThat(((ExampleWebAction) context.getLastAction()).isSuccessful()).isTrue();
+    }
 
     @Then("the element with ([^\"]*) \"(.*)\" should ([^\"]*)")
     public void theElementShould(String locatorType, String locator, String condition) {
