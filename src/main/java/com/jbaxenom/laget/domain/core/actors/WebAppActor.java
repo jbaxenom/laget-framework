@@ -10,17 +10,9 @@ public abstract class WebAppActor extends WebActor {
     private String username;
     private String password;
 
-    public WebAppActor() {
-        super();
-    }
-
     public WebAppActor(String username, String password) {
         this.username = username;
         this.password = password;
-    }
-
-    public WebAppActor(WebDriver driver) {
-        super(driver);
     }
 
     public WebAppActor withUsername(String username) {

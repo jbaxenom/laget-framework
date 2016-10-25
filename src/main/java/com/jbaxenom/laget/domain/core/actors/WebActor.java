@@ -20,15 +20,11 @@ import java.util.Date;
  */
 public abstract class WebActor extends Actor {
 
-    private final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
-
-    public WebActor() {
-        this.driver.set(initializeWebDriver());
-    }
-
-    public WebActor(WebDriver driver) {
-        this.driver.set(driver);
-    }
+    private final ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>() {
+        @Override protected WebDriver initialValue() {
+            return initializeWebDriver();
+        }
+    };
 
     // Actions
 
@@ -39,7 +35,6 @@ public abstract class WebActor extends Actor {
     public void waitUntil(ExpectedCondition condition, long timeoutInSeconds) {
         new WebDriverWait(getDriver(), timeoutInSeconds).until(condition);
     }
-
 
     // WebDriver Initialisation
     private WebDriver initializeWebDriver() {
