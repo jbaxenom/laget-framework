@@ -1,7 +1,5 @@
 package com.jbaxenom.laget.domain.core.actors;
 
-import org.openqa.selenium.WebDriver;
-
 /**
  * @author jbaxenom on 4/11/15.
  */
