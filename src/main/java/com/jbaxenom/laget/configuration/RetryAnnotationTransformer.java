@@ -8,16 +8,19 @@ import java.lang.reflect.Method;
 
 
 /**
- * Implementation of TestNG's annotation transformer to include automatic retry on error in any test using the @Test
- * annotation
+ * Implementation of TestNG's annotation transformer to include automatic retry on error in any
+ * test using the @Retry annotation
  *
  * @author chema.delbarco
  */
-public class AnnotationTransformer implements IAnnotationTransformer {
+public class RetryAnnotationTransformer implements IAnnotationTransformer {
 
   public synchronized void transform(ITestAnnotation annotation, Class testClass,
                                      Constructor testConstructor, Method testMethod) {
-    annotation.setTimeOut(360000);
-    annotation.setRetryAnalyzer(RetryAnalyzer.class);
+
+      if (testMethod.isAnnotationPresent(Retry.class)) {
+          annotation.setRetryAnalyzer(RetryAnnotationRetryAnalyzer.class);
+      }
+
   }
 }
