@@ -9,12 +9,15 @@ import org.testng.ITestResult;
  *
  * @author chema.delbarco
  */
-public class RetryAnalyzer implements IRetryAnalyzer {
+public abstract class RetryAnalyzer implements IRetryAnalyzer {
 
-    // Change this value to enable retries on failure
-    public static final int MAX_RETRY_COUNT = 1;
+    protected static int MAX_RUN_COUNT;
 
-    private final ThreadLocal<Integer> count = new ThreadLocal<Integer>() {
+    /**
+     * stores the current count of test retries in a thread-safe variable to ensure it works in
+     * concurrent test runs
+     */
+    protected final ThreadLocal<Integer> count = new ThreadLocal<Integer>() {
 
         @Override
         protected synchronized Integer initialValue() {
@@ -24,12 +27,18 @@ public class RetryAnalyzer implements IRetryAnalyzer {
     };
 
     public boolean retry(ITestResult result) {
+        return false;
+    }
+
+    public boolean processRetry(ITestResult result) {
+        // Increment counter
         count.set(count.get() + 1);
 
-        if (count.get() <= MAX_RETRY_COUNT) {
-            System.out.println("Retrying test: " + result.getName() + ". Retry count: " + count.get());
+        if (count.get() < MAX_RUN_COUNT) {
+            System.out.println("\nTest " + result.getName() + " Failed. Retrying! (count: " + count.get() + ")\n");
             return true;
         } else {
+            System.out.println("\nTest " + result.getName() + " failed after " + count.get() + " runs. Marking it as FAILED\n");
             return false;
         }
     }
