@@ -1,4 +1,4 @@
-package com.jbaxenom.laget.configuration;
+package com.jbaxenom.laget.configuration.retries;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -15,8 +15,8 @@ import static java.lang.annotation.ElementType.TYPE;
 public @interface Retry {
 
     /**
-     * the maximum amount of times the test should be run (original + retries).
+     * The maximum amount of times the test should be run (original + retries).
      */
-    public int count() default 3;
+    int count() default AbstractRetryAnalyzer.DEFAULT_MAX_RUN_COUNT;
 
 }

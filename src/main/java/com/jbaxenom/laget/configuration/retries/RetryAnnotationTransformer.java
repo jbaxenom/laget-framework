@@ -1,4 +1,4 @@
-package com.jbaxenom.laget.configuration;
+package com.jbaxenom.laget.configuration.retries;
 
 import org.testng.IAnnotationTransformer;
 import org.testng.annotations.ITestAnnotation;
@@ -8,8 +8,7 @@ import java.lang.reflect.Method;
 
 
 /**
- * Implementation of TestNG's annotation transformer to include automatic retry on error in any
- * test using the @Retry annotation
+ * Enables automatic retry on error in any test method or class is using the @Retry annotation.
  *
  * @author chema.delbarco
  */

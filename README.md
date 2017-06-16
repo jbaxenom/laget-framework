@@ -48,6 +48,7 @@ testers always have to cover:
   nice-looking HTML
 - It provides **test data tools** in the form of entities, actors and actions that can process and parse **JSON data** 
   and **SQL queries**
+- It provides the option to **automatically retry failing tests**, in different levels of execution
 - It **will (hopefully soon) integrate with JIRA and Zephyr plugin for JIRA** so that your test runs can be fully 
   managed directly from these famous project and test management tools. 
 
@@ -179,6 +180,63 @@ The browser where the test will be run. List of browsers supported:
 
 Please go to the [Running Tests](https://github.com/jbaxenom/laget-framework/wiki/Running-Tests) page in the wiki
 to see how to use the different runners the framework provides.
+
+# Automatic Retries after Test Failures
+
+Retrying tests is a known best practice to:
+
+1. Increase stability and reliability of tests running in unreliable test environments,
+2. Identify *flaky tests* (tests that fail apparently randomly) for further investigation and fixing.
+
+It is important to understand that using test retrying techniques should never be considered a 
+normal approach to testing, not only because it is slower, but most importantly because not 
+investigating the reason for tests to be flaky can potentially hide actual bugs in the system.
+
+
+## Supported Retry Types
+
+This library provides 3 different approaches for automated retries:
+
+* **Retry all failing tests**: Retry any failing TestNG test marked with TestNG's `@Test` annotation. 
+* **Retry specific failing tests**: Retry specific failing TestNG tests, annotated with the `@Retry` annotation.
+
+### Retrying All Failing Tests 
+
+By using the `TestAnnotationTransformer` listener, every test method or class using TestNG's default
+`@Test` annotation will be automatically retried on failure a defined set of times. 
+
+To define maximum number of runs use the `maxRunCount` parameter in the `environment.properties` file.
+
+For example, a value of `3` will set maximum number of runs to 3 (1 original run and 2 retries).
+
+### Retrying Specific Failing Tests
+
+By using the `RetryAnnotationTransformer` listener, you can specify the test methods or classes that 
+will retry on error by simply adding a `@Retry` annotation either at method or class level.
+
+To define the total amount of times that the test should run you can use the `count` parameter inside
+the annotation (ex: `@Retry(count = 5)`)
+
+
+## Adding TestNG listeners
+
+To use either of the TestNG retry mechanisms, you just need to add 
+the desired listener to your TestNNG run. There are several ways to do it, as explained in the 
+[TestNG's documentation](http://testng.org/doc/documentation-main.html#testng-listeners). 
+
+In order to enable it in your IntelliJ runs we recommend to add the listener as a command line 
+argument. The way to do it is to edit the TestNG executor that runs the test. You can define the 
+executors in the upper right selector in IntelliJ UI, where the name of the last test run appears: 
+just click in the small arrow in the right, choose "Edit Configurations" and, under "JDK Settings", 
+add the following in "Test runner params":
+
+    -listener com.akamai.testing.testng.listeners.TestAnnotationTransformer.class
+
+or
+    
+    -listener com.akamai.testing.testng.listeners.RetryAnnotationTransformer.class
+
+Now every time you run a test from IntelliJ it should retry as you defined.
 
 # Roadmap
 
