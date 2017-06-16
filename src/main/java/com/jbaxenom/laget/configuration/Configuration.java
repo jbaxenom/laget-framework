@@ -11,6 +11,8 @@ import java.util.Properties;
  */
 public enum Configuration {
 
+    maxRunCount("maxRunCount"),
+
     devAPIEndpoint("devAPIEndpoint"),
     integrationAPIEndpoint("integrationAPIEndpoint"),
     stagingAPIEndpoint("stagingAPIEndpoint"),
@@ -84,6 +86,14 @@ public enum Configuration {
     public long getInt() {
         return Integer.parseInt(configuration.get(this));
     }
+
+    /**
+     * @return the maximum total test count allowed, including automatic retries, when using them
+     */
+    public static int getMaxRunCount() {
+        return (maxRunCount.get().equals("")) ? 3 : Integer.getInteger(maxRunCount.get());
+    }
+
 
     /**
      * @return the Environment where tests will be run, set in either environmental variable or the properties file

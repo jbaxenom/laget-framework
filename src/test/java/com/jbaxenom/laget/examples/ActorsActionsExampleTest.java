@@ -1,6 +1,6 @@
 package com.jbaxenom.laget.examples;
 
-import com.jbaxenom.laget.configuration.Retry;
+import com.jbaxenom.laget.configuration.retries.Retry;
 import com.jbaxenom.laget.domain.examples.actors.ExampleWebUser;
 import org.testng.annotations.*;
 
