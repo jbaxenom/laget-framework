@@ -6,8 +6,7 @@
 
     <groupId>com.jbaxenom</groupId>
     <artifactId>laget-framework</artifactId>
-    <version>1.1.0</version>
-    <packaging>jar</packaging>
+    <version>1.1.1</version>
 
     <properties>
         <appium.version>5.0.0-BETA8</appium.version>
