@@ -2,36 +2,19 @@
 
 ## Background
 
-**The LAGET Framework's goal is to show how a test framework can enable all members of the team to create 
-automated tests in the way they can be more effective**. It does it by providing an adaptive approach 
-for creating test cases, using different "abstraction layers" that adapt to the different technical 
-skill-sets that agile team members have, taking special consideration towards team members that are 
-less technically savvy (or not at all).
+**LAGET's goal is to show how a test framework can enable all members of the team to create automated tests in the way they can be more effective**. 
 
-We testers love to complain about how difficult it is to adopt a _"Whole Team Approach"_ in our teams, 
-blaming it on how wrongly others interact with us. We then go back to our workstations to continue 
-coding our test automation scripts, created by ourselves and aimed to be used only by us...
+It does it by providing an adaptive approach for creating test cases, using different "abstraction layers" that adapt to the different technical skill-sets that agile team members have, taking special consideration towards team members that are less technically savvy (or not at all).
 
-After several years working in fixing similar behaviors in pretty much every test team I have worked 
-at, I decided to share my experience and knowledge with the testing community. I wrote some blog posts 
-(you can check them out 
-[here](https://www.linkedin.com/pulse/what-test-automation-framework-should-building-chema-del-barco) 
-and [here](https://www.linkedin.com/pulse/writing-test-framework-help-team-build-quality-chema-del-barco)), 
-and I also decided to share how I have approached all my test libraries to help solving this problem. 
-This is how the LAGET framework was born. For several years now, every time I have solved a particular 
-challenge related to making test automation more effective, or to be able to test a different kind of 
-software, every time that I believed that it could be useful for others, I added it to LAGET. 
+We testers love to complain about how difficult it is to adopt a _"Whole Team Approach"_ in our teams, blaming it on how wrongly others interact with us. We then go back to our workstations to continue coding our test automation scripts, created by ourselves and aimed to be used only by us...
 
-As you can see, LAGET is just a result of my experience as a tester. It is something that _works for 
-me_. I do not claim that it is going to solve your particular automation problems (like too many 
-libraries and frameworks out there do), or that is a piece of java art (I actually don't consider 
-myself good in programming). However, I think LAGET provides is a humble but strong combination of 
-core settings, methodologies, best practices and out-of-the-box tools, and it has always helped me 
-as a **good start point to create GUI tests for Desktop Web, Mobile Web and Mobile apps, or API tests 
+After several years working in fixing similar behaviors in pretty much every test team I have worked at, I decided to share my experience and knowledge with the testing community. I wrote some blog posts (you can check them out [here](https://www.linkedin.com/pulse/what-test-automation-framework-should-building-chema-del-barco) and [here](https://www.linkedin.com/pulse/writing-test-framework-help-team-build-quality-chema-del-barco)), and I also decided to share how I have approached all my test libraries to help solving this problem. 
+
+So for several years now, every time I solved a particular challenge related to making test automation more effective, or to be able to test a different kind of software, I added it to LAGET. One important detail is that LAGET is just the result of my experience as a tester. It is something that _works for me_. I do not claim that it is going to solve your particular automation problems (like too many 
+libraries and frameworks out there do), or that is a piece of java art (I actually don't consider myself good in programming). However, I humbly think LAGET provides is a good combination of core settings, methodologies, best practices and out-of-the-box tools, and it has always helped me as a **good start point to create GUI tests for Desktop Web, Mobile Web and Mobile apps, or API tests 
 for RESTfull webservices**, so I wanted to share it with everyone.
 
-So as good Agile testers we are: give it a try, see if you like it, ask questions and feel free to 
-experiment, change and improve it!
+So as good Agile testers we are: give it a try, see if you like it, ask questions and feel free to experiment, change and improve it!
 
 ## Features and Capabilities
 
