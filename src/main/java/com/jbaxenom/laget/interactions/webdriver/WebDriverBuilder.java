@@ -102,7 +102,7 @@ public class WebDriverBuilder {
             }
 
             if (os != null) {
-                capabilities.setCapability(CapabilityType.PLATFORM, os);
+                capabilities.setCapability(CapabilityType.PLATFORM_NAME, os);
             }
 
             capabilities.setCapability("name", System.getProperty("SCENARIO_NAME"));

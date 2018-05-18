@@ -9,19 +9,19 @@
     <version>1.1.1</version>
 
     <properties>
-        <appium.version>5.0.0-BETA8</appium.version>
-        <cucumber-reporting.version>3.8.0</cucumber-reporting.version>
+        <appium.version>6.0.0-BETA5</appium.version>
+        <cucumber-reporting.version>3.16.0</cucumber-reporting.version>
         <cucumber.version>1.2.5</cucumber.version>
-        <httpclient.version>4.5.3</httpclient.version>
-        <jackson.version>2.8.6</jackson.version>
-        <json.version>20170516</json.version>
-        <lang3.version>3.6</lang3.version>
+        <httpclient.version>4.5.5</httpclient.version>
+        <jackson.version>2.9.5</jackson.version>
+        <json.version>20180130</json.version>
+        <lang3.version>3.7</lang3.version>
         <log4j.version>1.2.17</log4j.version>
-        <phantomjsdriver.version>1.4.3</phantomjsdriver.version>
+        <phantomjsdriver.version>1.4.4</phantomjsdriver.version>
         <sauce-junit.version>2.1.23</sauce-junit.version>
-        <sauce-rest.version>1.0.35</sauce-rest.version>
-        <selenium.version>3.4.0</selenium.version>
-        <truth.version>0.33</truth.version>
+        <sauce-rest.version>1.0.37</sauce-rest.version>
+        <selenium.version>3.12.0</selenium.version>
+        <truth.version>0.40</truth.version>
 
         <maven.compiler.version>3.6.1</maven.compiler.version>
         <maven.exec.version>1.6.0</maven.exec.version>
@@ -75,6 +75,12 @@
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>${log4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.codeborne</groupId>
+            <artifactId>selenide</artifactId>
+            <version>4.11.4</version>
         </dependency>
 
         <dependency>
