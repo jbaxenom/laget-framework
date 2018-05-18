@@ -17,6 +17,6 @@ public @interface Retry {
     /**
      * The maximum amount of times the test should be run (original + retries).
      */
-    int count() default AbstractRetryAnalyzer.DEFAULT_MAX_RUN_COUNT;
+    int count() default 3;
 
 }

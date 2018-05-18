@@ -1,31 +1,22 @@
 package com.jbaxenom.laget.interactions.webdriver.pages.examples;
 
-import com.jbaxenom.laget.interactions.webdriver.pages.AbstractWebPage;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
+import static com.codeborne.selenide.Selenide.*;
 
 /**
  * Page Object implementation example of fictitious web page with one element named "ThisElement"
  *
  * @author jbaxenom
  */
-public class ExampleWebPage extends AbstractWebPage {
-
-    @FindBy(id = "thisElementId")
-    private WebElement thisElement;
-
-    public ExampleWebPage(WebDriver driver) {
-        super(driver);
-    }
+public class ExampleWebPage {
 
     /**
-     * Example Interaction
+     * Example Interaction using Selenide
      *
      * @return same page for method chaining purposes
      */
     public ExampleWebPage clickThisElement() {
-        thisElement.click();
+        $("#thisElemendId").click();
         return this;
     }
 
@@ -35,7 +26,7 @@ public class ExampleWebPage extends AbstractWebPage {
      * @return True if element is displayed, False otherwise
      */
     public boolean isThisElementDisplayed() {
-        return isElementDisplayed(thisElement);
+        return $("thisElemendId").isDisplayed();
     }
 
     /**
@@ -44,6 +35,6 @@ public class ExampleWebPage extends AbstractWebPage {
      * @return the inner text in the ThisElement element
      */
     public String getThisElementText() {
-        return thisElement.getText();
+        return $("thisElementId").text();
     }
 }
