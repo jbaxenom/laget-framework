@@ -53,4 +53,7 @@ Additionally, it also includes tons of test automation candy:
 - **Automatic Retry of failed tests**. You can choose to automatically retry specific tests if they 
   fail.
 
-Want more info about it? Check out the [wiki](https://github.com/jbaxenom/laget-framework/wiki)
+
+## Want to know more?
+
+Check out the [wiki](https://github.com/jbaxenom/laget-framework/wiki)
