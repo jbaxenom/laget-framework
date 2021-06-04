@@ -12,7 +12,7 @@
         <appium.version>5.0.0-BETA8</appium.version>
         <cucumber-reporting.version>3.8.0</cucumber-reporting.version>
         <cucumber.version>1.2.5</cucumber.version>
-        <httpclient.version>4.5.3</httpclient.version>
+        <httpclient.version>4.5.13</httpclient.version>
         <jackson.version>2.9.10.5</jackson.version>
         <json.version>20170516</json.version>
         <lang3.version>3.6</lang3.version>
