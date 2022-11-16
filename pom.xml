@@ -13,7 +13,7 @@
         <cucumber-reporting.version>3.8.0</cucumber-reporting.version>
         <cucumber.version>1.2.5</cucumber.version>
         <httpclient.version>4.5.13</httpclient.version>
-        <jackson.version>2.9.10.8</jackson.version>
+        <jackson.version>2.12.7.1</jackson.version>
         <json.version>20170516</json.version>
         <lang3.version>3.6</lang3.version>
         <log4j.version>1.2.17</log4j.version>
